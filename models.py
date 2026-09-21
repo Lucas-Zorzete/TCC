@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, Integer, String, Float, Text, Datetime, Date, ForeignKey
+from sqlalchemy import Column, Integer, String, Float, Text, DateTime, Date, ForeignKey
 from datetime import datetime, timezone
 
 class User(Base):
@@ -11,7 +11,7 @@ class User(Base):
     password = Column(Text)
     photo = Column(String(255))
     created_at = Column(
-        Datetime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
 
 class Doctor(Base):
@@ -35,7 +35,7 @@ class Checkup(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     type = Column(String(50))
     created_at = Column(
-        Datetime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
     date = Column(Date)
     media_bpm = Column(Float)
@@ -48,5 +48,5 @@ class Medicao_bpm(Base):
     sistolica = Column(Integer)
     diastolica = Column(Integer)
     date_time = Column(
-        Datetime(timezone=True), default=lambda: datetime.now(timezone.utc)
+        DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
