@@ -1,5 +1,5 @@
 from database import Base
-from sqlalchemy import Column, Integer, String, Float, Text, DateTime, Time, Date, ForeignKey, Boolean, Decimal
+from sqlalchemy import Column, Integer, String, Float, Text, DateTime, Time, Date, ForeignKey, Boolean, Numeric
 from datetime import datetime, timezone
 
 class User(Base):
@@ -165,7 +165,7 @@ class Assessment_anxious(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     beginning_period = Column(Date)
     end_period = Column(Date)
-    average_level = Column(Decimal(4, 2))
+    average_level = Column(Numeric(4, 2))
     average_bpm = Column(Integer)
 
 # PRESSÃO ARTERIAL
@@ -188,8 +188,8 @@ class Measurement_ppg(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     measurement_pressure_id =  Column(Integer, ForeignKey("measurements_preassure.id"), nullable=False)
     cardiac_rate = Column(Integer)
-    hrv = Column(Decimal(6, 2))
-    quality_sign = Column(Decimal(5, 2))
+    hrv = Column(Numeric(6, 2))
+    quality_sign = Column(Numeric(5, 2))
     date_time = Column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
@@ -214,3 +214,6 @@ class Report_weekly(Base):
     created_at = Column(
         DateTime(timezone=True), default=lambda: datetime.now(timezone.utc)
     )
+
+if __name__ == "__main__":
+    print("Sucesso!")

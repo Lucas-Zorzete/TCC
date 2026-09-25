@@ -13,6 +13,86 @@ db_session = SessionLocal()
 def index():
     return render_template('index.html')
 
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+# Route principal / Index
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Home
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+# Autenticação e Conta
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Aqui você processará as credenciais de login no futuro
+        return redirect(url_for('home'))
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Aqui você salvará o novo usuário
+        return redirect(url_for('login'))
+    return render_template('register.html')
+
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    if request.method == 'POST':
+        # Processa a solicitação de recuperação de senha
+        return redirect(url_for('verification'))
+    return render_template('forgot.html')
+
+@app.route('/new-password', methods=['GET', 'POST'])
+def new_password():
+    if request.method == 'POST':
+        # Salva a nova senha
+        return redirect(url_for('login'))
+    return render_template('new-password.html')
+
+@app.route('/verification', methods=['GET', 'POST'])
+def verification():
+    if request.method == 'POST':
+        # Valida o código digitado
+        return redirect(url_for('new_password'))
+    return render_template('verification.html')
+
+# Onboarding
+@app.route('/onboarding-reason', methods=['GET', 'POST'])
+def onboarding_reason():
+    if request.method == 'POST':
+        return redirect(url_for('onboarding_treatment'))
+    return render_template('onboarding-reason.html')
+
+@app.route('/onboarding-treatment', methods=['GET', 'POST'])
+def onboarding_treatment():
+    if request.method == 'POST':
+        return redirect(url_for('register'))
+    return render_template('onboarding-treatment.html')
+
+# Módulos de Saúde e Monitoramento
+@app.route('/anxiety')
+def anxiety():
+    return render_template('anxiety.html')
+
+@app.route('/performance')
+def performance():
+    return render_template('performance.html')
+
+@app.route('/pressure')
+def pressure():
+    return render_template('pressure.html')
+
+@app.route('/report')
+def report():
+    return render_template('report.html')
+
 # USUÁRIOS
 @app.route('/api/users', methods=["POST"])
 def create_user():
@@ -149,7 +229,7 @@ def create_activity():
 
 @app.route('/api/bpm', methods=["GET"])
 def get_bpm():
-    user_id = request.args.get.("user_id", type=int)
+    user_id = request.args.get("user_id", type=int)
 
     query = db_session.query(Measurement_bpm)
 
@@ -207,7 +287,7 @@ def get_cardiac_zones():
     
     zones = query.order_by(Cardiac_zone.date.desc()).all()
 
-    return jsonify{[
+    return jsonify([
         {
             "id": zone.id,
             "user_id": zone.user_id,
@@ -217,7 +297,7 @@ def get_cardiac_zones():
             "minutes": zone.minutes
         }
         for zone in zones
-    ]}   
+    ])
 
 @app.route('/api/cardiac-zones', methods=["POST"])
 def create_cardiac_zones():
@@ -258,7 +338,7 @@ def get_recoveries():
     
     recoveries = query.order_by(Recovery.date.desc()).all()
 
-    return jsonify{[
+    return jsonify([
         {
            "id": recovery.id,
             "user_id": recovery.user_id,
@@ -269,7 +349,7 @@ def get_recoveries():
             "queda_2_min": recovery.queda_2_min
         }
         for recovery in recoveries
-    ]}   
+    ])
 
 @app.route('/api/recoveries', methods=["POST"])
 def create_recoveries():
@@ -305,28 +385,28 @@ def create_recoveries():
 def get_weekly_goals():
     user_id = request.args.get("user_id", type=int)
 
-        query = db_session.query(Goal_weekly)
+    query = db_session.query(Goal_weekly)
 
-        if user_id:
-            query = query.filter(Goal_weekly.user_id == user_id)
-        
-        goals_weekly = query.order_by(Goal_weekly.date.desc()).all()
+    if user_id:
+        query = query.filter(Goal_weekly.user_id == user_id)
+    
+    goals_weekly = query.order_by(Goal_weekly.date.desc()).all()
 
-        return jsonify{[
-            {
-            "id": goal.id,
-            "user_id": goal.user_id,
-            "beggining_week": goal.beggining_week,
-            "end_week": goal.end_week,
-            "goal_activity": goal.goal_activity,
-            "activity_completed": goal.activity_completed,
-            "goal_intensity": goal.goal_intensity,
-            "intensity_completed": goal.intensity_completed,
-            "goal_sessions": goal.goal_sessions,
-            "sessions_completed": goal.sessions_completed
-        }
-            for goal in goals
-        ]} 
+    return jsonify([
+        {
+        "id": goal.id,
+        "user_id": goal.user_id,
+        "beggining_week": goal.beggining_week,
+        "end_week": goal.end_week,
+        "goal_activity": goal.goal_activity,
+        "activity_completed": goal.activity_completed,
+        "goal_intensity": goal.goal_intensity,
+        "intensity_completed": goal.intensity_completed,
+        "goal_sessions": goal.goal_sessions,
+        "sessions_completed": goal.sessions_completed
+    }
+        for goal in goals
+    ])
 
 @app.route('/api/weekly-goals', methods=["POST"])
 def create_weekly_goals():
@@ -860,3 +940,4 @@ def get_weekly_report():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
+    print("Sucesso!")

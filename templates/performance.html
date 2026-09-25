@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Performance Física — VitaPulse</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <div class="app">
+            <div class="mobile dashboard">
+                <header class="topbar">
+                    <button class="menu" data-menu>☰</button>
+                    <h1>Performance Física</h1>
+                
+                    <button
+                        class="avatar"
+                        onclick="toast('Perfil demonstrativo')"
+                    ></button>
+                </header>
+                <main class="page-body">
+                    <section class="card performance-card">
+                        <p>
+                            <b>Sessões:</b> 4 sessões
+                        </p>
+                        <p>
+                            <b>Tempo total:</b> 3h25
+                        </p>
+                        <table class="summary-table">
+                            <tr>
+                                <td>FC média</td>
+                                <td>72 BPM</td>
+                            </tr>
+                            <tr>
+                                <td>Tempo ativo</td>
+                                <td>3h42</td>
+                            </tr>
+                            <tr>
+                                <td>Intensidade</td>
+                                <td>Zona 4</td>
+                            </tr>
+                            <tr>
+                                <td>Recuperação</td>
+                                <td>34 BPM/min</td>
+                            </tr>
+                            <tr>
+                                <td>Atividade</td>
+                                <td>+12%</td>
+                            </tr>
+                        </table>
+                    </section>
+                </main>
+
+                <div class="nav-drawer">
+                    <nav class="drawer">
+                        <img
+                            class="drawer-logo"
+                            src="{{ url_for('static', filename='assets/vitapulse-logo-full.png') }}"
+                            alt="VitaPulse"
+                        >
+                        <button onclick="window.location.href='{{ url_for('home') }}'">⌂ Página Inicial</button>
+                        <button onclick="window.location.href='{{ url_for('performance') }}'">♡ Performance Física</button>
+                        <button onclick="window.location.href='{{ url_for('anxiety') }}'">◉ Ansiedade</button>
+                        <button onclick="window.location.href='{{ url_for('pressure') }}'">♥ Pressão arterial</button>
+                        <button onclick="window.location.href='{{ url_for('report') }}'">▤ Relatório Semanal</button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='app.js') }}"></script>
+    </body>
+</html>

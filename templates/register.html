@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Cadastre-se — VitaPulse</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <div class="app">
+            <div class="mobile auth-bg">
+                <div class="status">
+                    <span>9:41</span>
+                    <span class="status-icons">▮▮ WiFi ▰</span>
+                </div>
+                <div class="auth-content">
+                    <h1 class="auth-title">Cadastre-se</h1>
+                    <p class="auth-sub">Crie sua conta aqui</p>
+                    <form class="form" data-form="register" action="{{ url_for('register') }}" method="POST">
+                        <label class="field">♙
+                            <input name="name" required placeholder="Nome e Sobrenome">
+                        </label>
+                        <label class="field">▣
+                            <input name="phone" required placeholder="ex: XX+ (XX) YYYYY-YYYY">
+                        </label>
+                        <label class="field">✉
+                            <input name="email" type="email" required placeholder="Email">
+                        </label>
+                        <label class="field">♙
+                            <input id="pw" name="password" type="password" required placeholder="Senha">
+                            <button type="button" class="eye">◉</button>
+                        </label>
+                        <div class="terms">Ao cadastrar-se, você concorda com os <a href="#">termos de uso</a></div>
+                        <button type="submit" class="primary">
+                            Cadastre-se
+                        </button>
+                    </form>
+                    <div class="divider">
+                        <span class="ou">OU</span>
+                    </div>
+                    <button class="social" onclick="toast('Login social demonstrativo')">
+                        <img class="social-icon" src="{{ url_for('static', filename='assets/google-icon.png') }}" alt="Google">
+                        Login com Gmail
+                    </button>
+                    <button class="social" onclick="toast('Login social demonstrativo')">
+                        <img class="social-icon" src="{{ url_for('static', filename='assets/samsung-icon.png') }}" alt="Samsung Account">
+                        Login com Samsung Account
+                    </button>
+                    <div class="bottom-link">Já possui uma conta? 
+                        <a href="{{ url_for('login') }}">Entrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="{{ url_for('static', filename='app.js') }}"></script>
+    </body>
+</html>
